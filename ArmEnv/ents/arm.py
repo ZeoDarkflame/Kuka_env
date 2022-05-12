@@ -24,12 +24,16 @@ class Arm:
     def apply_action(self, action, mode):
         ## CHANGE
         ## Make mode changeable
+        toruqe_sens = 500
+        vel_sens = 10
         
         if(mode == 'T'):
             mode = p.TORQUE_CONTROL
+            action = action*toruqe_sens
             p.setJointMotorControlArray(self.arm,self.joints,mode,forces = action,physicsClientId = self.client)
         elif(mode == 'V'):
             mode = p.VELOCITY_CONTROL
+            action = action*vel_sens
             p.setJointMotorControlArray(self.arm,self.joints,mode,targetVelocities = action,physicsClientId = self.client)
 
         #p.setJointMotorControlArray(self.arm,self.joints,mode,forces = action,physicsClientId = self.client)

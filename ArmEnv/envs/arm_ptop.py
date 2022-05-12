@@ -20,14 +20,16 @@ class PointToPoint(gym.Env):
 
         # the ranges for action spaces was decided based on tinkering done in testing2.py
         if(mode == 'T'):
+            print('TORQUE CONTROL')
             self.action_space = gym.spaces.box.Box(
-                low = np.array([-200, -200, -200, -200, -200, -200,-200]),
-                high = np.array([200,  200,  200,  200,  200,  200, 200])
+                low = np.array([-1, -1, -1, -1, -1, -1,-1]),
+                high = np.array([1,  1,  1,  1,  1,  1, 1])
             )
         elif(mode == 'V'):
+            print("VELOCITY CONTROL")
             self.action_space = gym.spaces.box.Box(
-                low = np.array([-0.01, -0.01, -0.01, -0.01, -0.01, -0.01,-0.01]),
-                high = np.array([0.01,  0.01,  0.01,  0.01,  0.01,  0.01, 0.01])
+                low = np.array([-1, -1, -1, -1, -1, -1,-1]),
+                high = np.array([1,  1,  1,  1,  1,  1, 1])
             )
         else:
             self.action_space = gym.spaces.box.Box(
