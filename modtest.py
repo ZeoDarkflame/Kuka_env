@@ -25,7 +25,7 @@ while(True):
     count += 1
     action, _states = model.predict(obs)
     print(action)
-    obs, rewards, dones, info = env.step(action*10)
+    obs, rewards, dones, info = env.step(action)
     rews.append(rewards)
     if(dones):
         break

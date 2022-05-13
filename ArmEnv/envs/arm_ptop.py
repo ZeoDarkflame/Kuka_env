@@ -13,7 +13,7 @@ from ArmEnv.ents.goal import Goal
 class PointToPoint(gym.Env):
     metadata = {'render_modes':['human']}
 
-    def __init__(self,gui=False,mode='T',record=False):
+    def __init__(self,gui=False,mode='T',record=False,T_sens = 200, V_sens=1):
         self.mode = mode
         self.record = record
 
@@ -54,6 +54,8 @@ class PointToPoint(gym.Env):
         ## SUBJECT TO CHANGE
         self.timesteps = 0
         self.max_timesteps = 5000
+        self.T_sens = T_sens
+        self.V_sens = V_sens
         self.arm = None
         #self.goal = None
         #self.goal_box = None #named as such becoz the random coordinates are named goal here
@@ -70,8 +72,8 @@ class PointToPoint(gym.Env):
     def step(self,action):
         
         self.timesteps += 1
-        for i in range(4):
-            self.arm.apply_action(action,self.mode)
+        for i in range(4):          #ADD THIS AS AN ARGUMENT TO ENV CONSTRUCTOR
+            self.arm.apply_action(action,self.mode,torque_sens=self.T_sens,vel_sens=self.V_sens)
             p.stepSimulation()
         arm_ob = self.arm.get_observation()
         reward = 0  #initialize reward 0
@@ -94,7 +96,7 @@ class PointToPoint(gym.Env):
         p.resetSimulation(self.client)
         p.setGravity(0,0,-10)
         # Reload Plane and Car
-        self.arm = Arm(self.client)
+        self.arm = Arm(self.client,)
         Plane(self.client)
         Goal(self.client,[0.5,0,0.5])
 
